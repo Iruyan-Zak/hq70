@@ -1,22 +1,9 @@
-#!/usr/bin/env stack
--- stack runghc
+main = print $ solve 0 3 [True, True]
 
-paskal2014 :: Int
-paskal2014 =  2014
-
-length.findIndices
-
-
-paskalRow :: Int -> [Int]
-paskalRow 1 =[1]
-paskalRow n =  zipWith xOr (pushFront$paskalRow $n-1) (reverse $ pushFront$paskalRow $n-1)
-
-pushFront::[Int] -> [Int]
-pushFront = (:) 0
-
-xOr :: Int -> Int -> Int
-xOr a b = (a-b)*(a-b)
-
-main :: IO ()
-main = do
-	print $ paskal2014
+solve :: Int -> Int -> [Bool] -> Int
+solve f_count steers l =
+    let tp = zip (init l) (tail l)
+        next_l = True : (map (\(a, b) -> a /= b) tp) ++ [True]
+        new_f_count = f_count + (length . filter (\b -> not b)) next_l
+    in  if new_f_count >= 2014 then steers
+        else solve new_f_count (steers + 1) next_l
