@@ -1,9 +1,14 @@
-main = print $ solve 0 3 [True, True]
+main :: IO()
+main = print $ solve 2014 [True]
 
-solve :: Int -> Int -> [Bool] -> Int
-solve f_count steers l =
-    let tp = zip (init l) (tail l)
-        next_l = True : (map (\(a, b) -> a /= b) tp) ++ [True]
-        new_f_count = f_count + (length . filter (\b -> not b)) next_l
-    in  if new_f_count >= 2014 then steers
-        else solve new_f_count (steers + 1) next_l
+solve :: Int -> [Bool] -> Int
+solve rest_count line =
+    let nextline = next_line line
+        new_rest_count = rest_count - (length . filter not) nextline
+    in  if new_rest_count > 0 then solve new_rest_count nextline
+        else length nextline
+
+next_line :: [Bool] -> [Bool]
+next_line line =
+    let children = zipWith (/=) (init line) (tail line)
+    in True : children ++ [True]
