@@ -8,5 +8,11 @@ itodenwaC :: Int -> Int
 itodenwaC 2 = 1
 itodenwaC n = 
 
-totyuu :: Int -> Int
+
+
+totyuu :: Int -> [Int]
 totyuu 3 list = itodenwaC
+
+main ::IO ()
+main = do
+	
